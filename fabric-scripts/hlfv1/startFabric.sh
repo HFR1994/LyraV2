@@ -22,9 +22,15 @@ echo ${FABRIC_START_TIMEOUT}
 sleep ${FABRIC_START_TIMEOUT}
 
 # Create the channel
-docker exec lyra1.peers.aabo.tech peer channel create -o orderer.aabo.tech:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx
+docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra1.peers.aabo.tech peer channel create -o orderer.aabo.tech:7050 -c lyra-cli -f /etc/hyperledger/configtx/composer-channel.tx
 
 # Join peer0.org1.example.com to the channel.
-docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra1.peers.aabo.tech peer channel join -b composerchannel.block
+docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra1.peers.aabo.tech peer channel join -b lyra-cli.block
+
+docker exec cli.aabo.tech go build; 
+
+docker exec cli.aabo.tech peer chaincode install -n mycc -v 1.0 -p sacc
+
+docker exec cli.aabo.tech peer chaincode instantiate -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":["a", "100"]}'
 
 cd ../..

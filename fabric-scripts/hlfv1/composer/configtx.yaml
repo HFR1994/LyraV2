@@ -53,21 +53,15 @@ Organizations:
         # MSPDir is the filesystem path which contains the MSP configuration
         MSPDir: crypto-config/ordererOrganizations/aabo.tech/msp
 
-        # turn off security for the channel
-        AdminPrincipal: Role.MEMBER
-
     - &Org1
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: Peers
+        Name: PeersMSP
 
         # ID to load the MSP definition as
         ID: PeersMSP
 
         MSPDir: crypto-config/peerOrganizations/peers.aabo.tech/msp
-
-        # turn off security for the peer
-        AdminPrincipal: Role.Admin
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
@@ -104,7 +98,7 @@ Orderer: &OrdererDefaults
 
         # Absolute Max Bytes: The absolute maximum number of bytes allowed for
         # the serialized messages in a batch.
-        AbsoluteMaxBytes: 98 MB
+        AbsoluteMaxBytes: 99 MB
 
         # Preferred Max Bytes: The preferred maximum number of bytes allowed for
         # the serialized messages in a batch. A message larger than the preferred
