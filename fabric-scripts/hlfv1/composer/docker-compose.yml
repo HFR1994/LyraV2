@@ -1,5 +1,12 @@
 version: '2'
 
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          ip_range: 172.28.5.0/24
+    
 services:
   ca.peers.aabo.tech:
     image: hyperledger/fabric-ca:$ARCH-1.0.3
@@ -10,15 +17,21 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a64f36ae49c527e08b9b3a97443006a9668d288a8bdcd2ca1e11a5f40ccf114e_sk
     ports:
       - "7054:7054"
+    expose:
+      - "7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/peers.aabo.tech/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.peers.aabo.tech
+    networks:
+      default:
+        ipv4_address: 172.20.128.2
 
   orderer.aabo.tech:
     container_name: orderer.aabo.tech
     image: hyperledger/fabric-orderer:$ARCH-1.0.3
     environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
@@ -29,10 +42,15 @@ services:
     command: orderer
     ports:
       - 7050:7050
+    expose:
+      - "7050"
     volumes:
         - ./:/etc/hyperledger/configtx
         - ./crypto-config/ordererOrganizations/aabo.tech/orderers/orderer.aabo.tech:/etc/hyperledger/msp/orderer
         - ./crypto-config/peerOrganizations/peers.aabo.tech/peers/peer0.peers.aabo.tech/:/etc/hyperledger/msp/peerPeers
+    networks:
+      default:
+        ipv4_address: 172.20.128.3
 
   lyra1.peers.aabo.tech:
     container_name: lyra1.peers.aabo.tech
@@ -40,11 +58,13 @@ services:
     environment:
       - CORE_LOGGING_PEER=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
+      - CORE_PEER_ADDRESSAUTODETECT=true
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_ID=lyra1.peers.aabo.tech
       - CORE_PEER_ADDRESS=lyra1.peers.aabo.tech:7051
       - CORE_PEER_LOCALMSPID=PeersMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=lyra1.peers.aabo.tech:7051
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composer_default
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
@@ -53,6 +73,9 @@ services:
     ports:
       - 7051:7051
       - 7053:7053
+    expose:
+      - "7053"
+      - "7051"
     volumes:
         - /var/run/:/host/var/run/
         - ./:/etc/hyperledger/configtx
@@ -61,6 +84,9 @@ services:
     depends_on:
       - orderer.aabo.tech
       - couchdb
+    networks:
+      default:
+        ipv4_address: 172.20.128.4
 
   cli.aabo.tech:
     container_name: cli.aabo.tech
@@ -84,13 +110,19 @@ services:
       - orderer.aabo.tech
       - couchdb
       - lyra1.peers.aabo.tech
+    networks:
+      default:
+        ipv4_address: 172.20.128.5
 
   couchdb:
     container_name: couchdb
     image: hyperledger/fabric-couchdb:$ARCH-1.0.3
     ports:
       - 5984:5984
+    expose:
+      - "5984"
     environment:
       DB_URL: http://localhost:5984/member_db
-
-
+    networks:
+      default:
+        ipv4_address: 172.20.128.6
