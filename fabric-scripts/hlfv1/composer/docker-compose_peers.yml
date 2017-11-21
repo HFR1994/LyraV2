@@ -17,11 +17,11 @@ services:
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_ADDRESSAUTODETECT=true
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_PEER_ID=lyra1.peers.aabo.tech
-      - CORE_PEER_ADDRESS=lyra1.peers.aabo.tech:7051
+      - CORE_PEER_ID=lyra2.peers.aabo.tech
+      - CORE_PEER_ADDRESS=lyra2.peers.aabo.tech:7051
       - CORE_PEER_LOCALMSPID=PeersMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=lyra1.peers.aabo.tech:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=lyra2.peers.aabo.tech:7051
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composer_default
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
