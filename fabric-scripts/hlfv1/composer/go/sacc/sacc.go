@@ -80,7 +80,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 
 	// If nothing was invoked, launch an error
 	fmt.Println("Invoke didn't find function: " + function)
-	return shim.Error("Ese es el mensaje de error")
+	return shim.Error("Recieved algo que no es nada")
 }
 
 /*
@@ -95,7 +95,7 @@ func (t *SimpleChaincode) initWallet(stub shim.ChaincodeStubInterface, args []st
 	// 	  0			  1
 	// Address	Initial Balance
 
-	if len(args) < 2 {
+	if len(args) != 2 {
 		return shim.Error("Incorrect Number of arguments, expecting 2")
 	}
 
@@ -153,7 +153,7 @@ func (t *SimpleChaincode) readWallet(stub shim.ChaincodeStubInterface, args []st
 	var address, jsonResp string
 	var err error
 
-	if len(args) < 1 {
+	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments, expecting the address to query")
 	}
 

@@ -27,14 +27,16 @@ docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.a
 # Join peer0.org1.example.com to the channel.
 docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra1.peers.aabo.tech peer channel join -b lyra-cli.block
 
-docker exec cli.aabo.tech go build; 
+docker exec cli.aabo.tech go get -u --tags nopkcs11 github.com/hyperledger/fabric/core/chaincode/shim
+
+docker exec cli.aabo.tech go build --tags nopkcs11 
 
 docker exec cli.aabo.tech peer chaincode install -n mycc -v 1.0 -p sacc
 
-docker exec cli.aabo.tech peer chaincode instantiate -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":[""]}'7
+docker exec cli.aabo.tech peer chaincode instantiate -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":[""]}'
 
 docker exec cli.aabo.tech peer chaincode invoke -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":["initWallet","A","100"]}'
 
-docker exec cli.aabo.tech peer chaincode invoke -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -c -c '{"Args":["readWallet","A"]}'
+docker exec cli.aabo.tech peer chaincode invoke -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -c '{"Args":["readWallet","A"]}'
 
 cd ../..
