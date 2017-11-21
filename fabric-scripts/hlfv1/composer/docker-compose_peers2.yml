@@ -9,7 +9,7 @@ networks:
     
 services:
 
-  peering.peers.aabo.tech:
+  lyra2.peers.aabo.tech:
     container_name: lyra2.peers.aabo.tech
     image: hyperledger/fabric-peer:$ARCH-1.0.3
     environment:
