@@ -80,7 +80,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 
 	// If nothing was invoked, launch an error
 	fmt.Println("Invoke didn't find function: " + function)
-	return shim.Error("Received Unknown function invocation")
+	return shim.Error("Ese es el mensaje de error")
 }
 
 /*

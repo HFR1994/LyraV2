@@ -21,10 +21,8 @@ export FABRIC_START_TIMEOUT=15
 echo ${FABRIC_START_TIMEOUT}
 sleep ${FABRIC_START_TIMEOUT}
 
-docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra2.peers.aabo.tech peer channel create -c lyra-cli
+docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra2.peers.aabo.tech peer channel fetch oldest lyra-cli.block -o ec2-54-218-80-223.us-west-2.compute.amazonaws.com:7050 -c lyra-cli
 
 docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" lyra2.peers.aabo.tech peer channel join -b lyra-cli.block
-
-docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp CORE_PEER_ADDRESS=ec2-54-218-80-223.us-west-2.compute.amazonaws.com:7051" lyra2.peers.aabo.tech peer channel join -b lyra-cli.block
 
 cd ../..

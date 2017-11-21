@@ -31,6 +31,10 @@ docker exec cli.aabo.tech go build;
 
 docker exec cli.aabo.tech peer chaincode install -n mycc -v 1.0 -p sacc
 
-docker exec cli.aabo.tech peer chaincode instantiate -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":["a", "100"]}'
+docker exec cli.aabo.tech peer chaincode instantiate -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":[""]}'7
+
+docker exec cli.aabo.tech peer chaincode invoke -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -v 1.0 -c '{"Args":["initWallet","A","100"]}'
+
+docker exec cli.aabo.tech peer chaincode invoke -o orderer.aabo.tech:7050 -C lyra-cli -n mycc -c -c '{"Args":["readWallet","A"]}'
 
 cd ../..

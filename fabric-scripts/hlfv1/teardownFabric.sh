@@ -10,8 +10,12 @@ ARCH=`uname -m`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Shut down the Docker containers for the system tests.
-cd "${DIR}"/composer
-ARCH=$ARCH docker-compose -f docker-compose.yml kill && docker-compose -f docker-compose.yml down
+
+docker kill $(docker ps -q)
+
+docker rm $(docker ps -a -q)
+
+docker rmi $(docker images -q
 
 # remove the local state
 #rm -rf ~/.composer-connection-profiles/hlfv1
