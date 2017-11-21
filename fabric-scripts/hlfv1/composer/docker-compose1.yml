@@ -99,13 +99,13 @@ services:
       - CORE_PEER_ID=cli.aabo.tech
       - CORE_PEER_ADDRESS=lyra1.peers.aabo.tech:7051
       - CORE_PEER_LOCALMSPID=PeersMSP
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/peers.aabo.tech/users/Admin@peers.aabo.tech/msp
+      - CORE_PEER_MSPCONFIGPATH=/opt/peer/crypto/peerOrganizations/peers.aabo.tech/users/Admin@peers.aabo.tech/msp
     working_dir: /opt/gopath/src/sacc
     volumes:
         - /var/run/:/host/var/run/
         - ./:/etc/hyperledger/configtx
         - ./go/:/opt/gopath/src/
-        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./crypto-config:/opt/peer/crypto/
     depends_on:
       - orderer.aabo.tech
       - couchdb
