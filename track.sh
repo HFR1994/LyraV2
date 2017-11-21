@@ -13,7 +13,7 @@ git reset --hard
 
 git clean -fd
 
-git pull origin masters
+git pull origin master
 
 #
 cd "${DIR}"/fabric-scripts/hlfv1
