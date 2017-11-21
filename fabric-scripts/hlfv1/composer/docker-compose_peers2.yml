@@ -9,7 +9,7 @@ networks:
     
 services:
 
-  lyra2.peers.aabo.tech:
+  peering.peers.aabo.tech:
     container_name: lyra2.peers.aabo.tech
     image: hyperledger/fabric-peer:$ARCH-1.0.3
     environment:
@@ -19,6 +19,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_ID=lyra2.peers.aabo.tech
       - CORE_PEER_ADDRESS=lyra2.peers.aabo.tech:7051
+      - CORE_PEER_COMMITTER_LEDGER_ORDERER=ec2-54-218-80-223.us-west-2.compute.amazonaws.com:7050
       - CORE_PEER_LOCALMSPID=PeersMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=lyra2.peers.aabo.tech:7051
@@ -26,7 +27,7 @@ services:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    command: peer node start -o 189.132.65.43:7050
+    command: peer node start -o ec2-54-218-80-223.us-west-2.compute.amazonaws.com:7050
     ports:
       - 7051:7051
       - 7053:7053

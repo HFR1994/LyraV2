@@ -21,4 +21,8 @@ export FABRIC_START_TIMEOUT=15
 echo ${FABRIC_START_TIMEOUT}
 sleep ${FABRIC_START_TIMEOUT}
 
+docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" peering.peers.aabo.tech peer channel create -c lyra-cli
+
+docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@peers.aabo.tech/msp" peering.peers.aabo.tech peer channel join -b lyra-cli.block
+
 cd ../..
