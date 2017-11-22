@@ -65,6 +65,7 @@ services:
       - CORE_PEER_LOCALMSPID=PeersMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=lyra1.peers.aabo.tech:7051
+      - CORE_CHAINCODE_ID_NAME=mycc
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composer_default
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
@@ -99,6 +100,7 @@ services:
       - CORE_PEER_ID=cli.aabo.tech
       - CORE_PEER_ADDRESS=lyra1.peers.aabo.tech:7051
       - CORE_PEER_LOCALMSPID=PeersMSP
+      - CORE_CHAINCODE_ID_NAME=mycc
       - CORE_PEER_MSPCONFIGPATH=/opt/peer/crypto/peerOrganizations/peers.aabo.tech/users/Admin@peers.aabo.tech/msp
     working_dir: /opt/gopath/src/sacc
     volumes:

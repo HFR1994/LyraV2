@@ -16,4 +16,4 @@ git clean -fd
 git pull origin master
 
 #
-cd "${DIR}"/fabric-scripts/hlfv1
+"${DIR}"/fabric-scripts/hlfv1/startFabric.sh
